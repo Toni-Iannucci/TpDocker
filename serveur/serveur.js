@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 
 app.use(express.json());
 
 // Connection à la base de données MongoDB
-mongoose.connect('mongodb+srv://toniiannucci:<password>@cluster0.sy4o3or.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://toniiannucci:Tonic@cluster0.sy4o3or.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -24,9 +24,7 @@ app.get('/api/test', (req, res) => {
 });
 
 // Écoute du port
-app.listen(port, () => {
-  console.log(`Serveur Express en cours d'exécution sur le port ${port}`);
-});
+
 
 app.post('/api/createTitle', (req, res) => {
     const { title } = req.body;
