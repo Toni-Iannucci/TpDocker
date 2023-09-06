@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
-// Middleware pour gérer les demandes JSON
+
 app.use(express.json());
 
 // Connection à la base de données MongoDB
@@ -18,12 +18,35 @@ mongoose.connect('mongodb+srv://toniiannucci:<password>@cluster0.sy4o3or.mongodb
   console.error('Erreur de connexion à MongoDB:', err);
 });
 
-// Définir des routes pour votre API
+// Définition des routes
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API fonctionne' });
 });
 
-// Écoutez le port spécifié
+// Écoute du port
 app.listen(port, () => {
   console.log(`Serveur Express en cours d'exécution sur le port ${port}`);
 });
+
+app.post('/api/createTitle', (req, res) => {
+    const { title } = req.body;
+  
+    const TitleModel = mongoose.model('Title', { title });
+  
+    const newTitle = new TitleModel({ title });
+  
+    newTitle.save((err) => {
+      if (err) {
+        console.error('Erreur lors de l\'insertion du titre:', err);
+        res.status(500).send('Erreur lors de l\'insertion du titre');
+      } else {
+        console.log('Titre inséré avec succès');
+        res.status(200).send('Titre inséré avec succès');
+      }
+    });
+  });
+  
+
+  app.listen(port, () => {
+    console.log(`Serveur Express en cours d'exécution sur le port ${port}`);
+  });
